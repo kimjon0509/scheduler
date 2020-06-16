@@ -16,7 +16,7 @@ export default function useApplicationData() {
   })
 
   const setDay = day => setState({ ...state, day });
-  console.log("state", state)
+  // console.log("state", state)
   //I thought we wanted to avoid this
   function bookInterview(id, interview) {
     const appointment = {
@@ -28,7 +28,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    const days = state.days;
+    const days = [...state.days];
     days.forEach(day => {
       if (day.appointments.includes(id)) {
         day.spots--;
@@ -37,24 +37,6 @@ export default function useApplicationData() {
 
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {setState({...state, appointments, days})})
-  }
-  //need to finish this
-  function getSpotsForDay() {
-    const dayName = state.day
-    let count = 0;
-    let dayId = 0;
-    for (let day of state.days) {
-      if (day.name === dayName) {
-        dayId = day.id;
-        day.appointments.map(appId => { 
-          if (state.appointments[appId].interview === null) {
-            count++;
-          }
-        })
-      }
-    }
-    console.log("getspot", dayId, count)
-    return { dayId , count };
   }
 
   function cancelInterview(id) {
@@ -66,7 +48,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    const days = state.days;
+    const days = [...state.days];
     days.forEach(day => {
       if (day.appointments.includes(id)) {
         day.spots++;
@@ -82,11 +64,10 @@ export default function useApplicationData() {
       [
       axios.get("/api/days"),
       axios.get("/api/appointments"),
-      axios.get("api/interviewers")
+      axios.get("/api/interviewers")
       ]
     )
     .then((all) => {
-      console.log("data")
       setState(prev => ({
         ...prev,
         days: all[0].data,
@@ -97,5 +78,5 @@ export default function useApplicationData() {
     })
   }, []);
 
-  return {state, setDay, bookInterview,cancelInterview, getSpotsForDay}
+  return {state, setDay, bookInterview,cancelInterview}
   }
