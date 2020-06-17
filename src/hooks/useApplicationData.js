@@ -3,7 +3,7 @@
 // The bookInterview action makes an HTTP request and updates the local state.
 // The cancelInterview action makes an HTTP request and updates the local state.
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ export default function useApplicationData() {
     days: [],
     appointments: {},
     interviewers: {}
-  })
+  });
   const setDay = day => setState({ ...state, day });
   //I thought we wanted to avoid this
   function bookInterview(id, interview) {
@@ -25,64 +25,68 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    console.log("before book ",state.days)
+
     // const days = [...state.days];
     const days = state.days.map(day => {
       if (day.appointments.includes(id)) {
-        console.log("check id and day",id, day)
-        return {...day,spots:day.spots - 1}
+        return {...day,spots:day.spots - 1};
       }
-      return day
-    })
-    console.log("after book",days)
+      return day;
+    });
+
     return axios.put(`/api/appointments/${id}`, appointment)
-    .then(() => setState((state) => { return {...state, appointments, days}}))
+      .then(() => setState((state) => {
+        return {...state, appointments, days};
+      }));
   }
 
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
-      interview: null 
+      interview: null
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    console.log("before cancel",state.days)
+    
     // const days = [...state.days];
     const days = state.days.map(day => {
       if (day.appointments.includes(id)) {
-        const newday = {...day,spots:day.spots + 1}
-        console.log("new day",newday)
-        return newday
+        const newday = {...day,spots:day.spots + 1};
+        return newday;
         // return {...day,spots:day.spots++}
       }
-      return day
-    })
-    console.log("after cancel",days)
+      return day;
+    });
+    
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => { setState((state) => {return {...state, appointments, days}})})
+      .then(() => {
+        setState((state) => {
+          return {...state, appointments, days};
+        });
+      });
   }
 
   useEffect(() => {
-    console.log("get request")
+    
     Promise.all(
       [
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
+        axios.get("/api/days"),
+        axios.get("/api/appointments"),
+        axios.get("/api/interviewers")
       ]
     )
-    .then((all) => {
-      setState(prev => ({
-        ...prev,
-        days: all[0].data,
-        appointments: all[1].data,
-        interviewers: all[2].data
+      .then((all) => {
+        setState(prev => ({
+          ...prev,
+          days: all[0].data,
+          appointments: all[1].data,
+          interviewers: all[2].data
         })
-      )
-    })
+        );
+      });
   }, []);
 
-  return {state, setDay, bookInterview,cancelInterview}
-  }
+  return {state, setDay, bookInterview,cancelInterview};
+}

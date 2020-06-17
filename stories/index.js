@@ -40,40 +40,40 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
   }) // Provides the default background color for our component
   .add("Unselected", () => <DayListItem name="Monday" spots={5} />) // To define our stories, we call add() once for each of our test states to generate a story
-  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />) 
+  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
   .add("Full", () => <DayListItem name="Monday" spots={0} />)
   .add("Clickable", () => (
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
   ));
 
-  const days = [
-    {
-      id: 1,
-      name: "Monday",
-      spots: 2,
-    },
-    {
-      id: 2,
-      name: "Tuesday",
-      spots: 5,
-    },
-    {
-      id: 3,
-      name: "Wednesday",
-      spots: 0,
-    },
-  ];
+const days = [
+  {
+    id: 1,
+    name: "Monday",
+    spots: 2,
+  },
+  {
+    id: 2,
+    name: "Tuesday",
+    spots: 5,
+  },
+  {
+    id: 3,
+    name: "Wednesday",
+    spots: 0,
+  },
+];
   
-  storiesOf("DayList", module)
-    .addParameters({
-      backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
-    })
-    .add("Monday", () => (
-      <DayList days={days} day={"Monday"} setDay={action("setDay")} />
-    ))
-    .add("Tuesday", () => (
-      <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
-    ));
+storiesOf("DayList", module)
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
+  })
+  .add("Monday", () => (
+    <DayList days={days} day={"Monday"} setDay={action("setDay")} />
+  ))
+  .add("Tuesday", () => (
+    <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
+  ));
 
 const interviewer = {
   id: 1,
@@ -145,7 +145,7 @@ storiesOf("Appointment", module)
       <Appointment id={1} time="12pm" />
       <Appointment id="last" time="1pm" />
     </Fragment>
-    ))
+  ))
   .add("Appointment Booked", () => (
     <Fragment>
       <Appointment
@@ -158,54 +158,54 @@ storiesOf("Appointment", module)
   ))
   .add("Header", () => <Header time="12pm" />)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
-  .add("Show", () => 
+  .add("Show", () =>
     <Show
-    student= "Lydia Miller-Jones"
-    interviewer={interviewer}
-    onDelete={action("onDelete")}
-    onEdit={action("onEdit")}
+      student= "Lydia Miller-Jones"
+      interviewer={interviewer}
+      onDelete={action("onDelete")}
+      onEdit={action("onEdit")}
     />
   )
-  .add("Confirm", () => 
+  .add("Confirm", () =>
     <Confirm
-    message="Delete the appointment?"
-    onConfirm={action("onConfirm")}
-    onCancel={action("onCancel")}
+      message="Delete the appointment?"
+      onConfirm={action("onConfirm")}
+      onCancel={action("onCancel")}
     />
   )
-  .add("Saving", () => 
-  <Status
-  message="Deleting"
-  />
-)
-  .add("Deleting", () => 
+  .add("Saving", () =>
     <Status
-    message="Deleting"
+      message="Deleting"
     />
   )
-  .add("Error Saving", () => 
+  .add("Deleting", () =>
+    <Status
+      message="Deleting"
+    />
+  )
+  .add("Error Saving", () =>
     <Error
-    message="Could not save appointment."
-    onClose={action("onClose")}
+      message="Could not save appointment."
+      onClose={action("onClose")}
     />
   )
-  .add("Error Deleting", () => 
-  <Error
-  message="Could not delete appointment."
-  onClose={action("onClose")}
-  />
+  .add("Error Deleting", () =>
+    <Error
+      message="Could not delete appointment."
+      onClose={action("onClose")}
+    />
   )
-  .add("Create", () => 
+  .add("Create", () =>
     <Form
       interviewers={interviewers}
       onSave={action("onSave")}
       onCancel={action("onCancel")}
     />)
-  .add("Edit", () => 
+  .add("Edit", () =>
     <Form
       name="Lydia Miller-Jones"
       interviewers={interviewers}
       interviewer={3}
       onSave={action("onSave")}
       onCancel={action("onCancel")}
-    />)
+    />);

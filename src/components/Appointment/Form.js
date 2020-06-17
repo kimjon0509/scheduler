@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
-import InterviewerList from "components/InterviewerList"
-import Button from "components/Button"
+import InterviewerList from "components/InterviewerList";
+import Button from "components/Button";
 
 export default function Form(props) {
 
@@ -10,13 +10,13 @@ export default function Form(props) {
   const [error, setError] = useState("");
 
   function reset() {
-    setName("")
-    setInterviewer(null)
+    setName("");
+    setInterviewer(null);
   }
 
   function cancel() {
-    reset()
-    props.onCancel()
+    reset();
+    props.onCancel();
   }
 
   function validate() {
@@ -30,14 +30,16 @@ export default function Form(props) {
   }
   
 
-  return(
+  return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             value={name}
-            onChange={(event) => {setName(event.target.value)}}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
             data-testid="student-name-input"
             type="text"
             placeholder="Enter Student Name"
@@ -53,5 +55,5 @@ export default function Form(props) {
         </section>
       </section>
     </main>
-  )
+  );
 }

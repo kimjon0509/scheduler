@@ -1,25 +1,25 @@
 import React from "react";
 import useVisualMode from "hooks/useVisualMode";
 
-import "components/Appointment/styles.scss"
+import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
-import Form from "./Form"
-import Status from "./Status"
-import Confirm from "./Confirm"
-import Error from "./Error"
+import Form from "./Form";
+import Status from "./Status";
+import Confirm from "./Confirm";
+import Error from "./Error";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
-const DELETING = "DELETING"
-const CONFIRM = "CONFIRM"
-const EDIT = "EDIT"
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
-const ERROR_SAVE = "ERROR_SAVE"
-const ERROR_DELETE = "ERROR_DELETE"
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
 
@@ -36,7 +36,7 @@ export default function Appointment(props) {
     transition(SAVING, true);
     props.bookInterview(props.id,interview)
       .then(() => {
-        transition(SHOW)
+        transition(SHOW);
       })
       .catch(error => transition(ERROR_SAVE, true));
   }
@@ -48,7 +48,7 @@ export default function Appointment(props) {
       .catch(error => transition(ERROR_DELETE, true));
   }
 
-  return(
+  return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={transition} />}
@@ -68,5 +68,5 @@ export default function Appointment(props) {
       {mode === ERROR_SAVE && <Error message={"Could not save appointment"} onClose={back}/>}
       {mode === ERROR_DELETE && <Error message={"Could not delete appointment"} onClose={back}/>}
     </article>
-  )
+  );
 }

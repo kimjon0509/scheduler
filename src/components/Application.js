@@ -16,9 +16,9 @@ export default function Application(props) {
   } = useApplicationData();
 
 
-  const appointments = getAppointmentsForDay(state, state.day)
+  const appointments = getAppointmentsForDay(state, state.day);
 
-  const interviewers = getInterviewersByDay(state, state.day)
+  const interviewers = getInterviewersByDay(state, state.day);
 
 
   const schedule = appointments.map((appointment) => {
@@ -36,22 +36,21 @@ export default function Application(props) {
       />
     );
   });
-  console.log("state days", state.days)
   return (
     <main className="layout">
       <section className="sidebar">
-      <img
+        <img
           className="sidebar--centered"
           src="images/logo.png"
           alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-        <DayList
-          days={state.days}
-          day={state.day}
-          setDay={setDay}
-        />
+          <DayList
+            days={state.days}
+            day={state.day}
+            setDay={setDay}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
