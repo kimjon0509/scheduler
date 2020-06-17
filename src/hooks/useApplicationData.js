@@ -14,9 +14,7 @@ export default function useApplicationData() {
     appointments: {},
     interviewers: {}
   })
-
   const setDay = day => setState({ ...state, day });
-  // console.log("state", state)
   //I thought we wanted to avoid this
   function bookInterview(id, interview) {
     const appointment = {
@@ -27,16 +25,18 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
-    const days = [...state.days];
-    days.forEach(day => {
+    console.log("before book ",state.days)
+    // const days = [...state.days];
+    const days = state.days.map(day => {
       if (day.appointments.includes(id)) {
-        day.spots--;
+        console.log("check id and day",id, day)
+        return {...day,spots:day.spots - 1}
       }
+      return day
     })
-
+    console.log("after book",days)
     return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {setState({...state, appointments, days})})
+    .then(() => setState((state) => { return {...state, appointments, days}}))
   }
 
   function cancelInterview(id) {
@@ -48,14 +48,20 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    const days = [...state.days];
-    days.forEach(day => {
+    console.log("before cancel",state.days)
+    // const days = [...state.days];
+    const days = state.days.map(day => {
       if (day.appointments.includes(id)) {
-        day.spots++;
+        const newday = {...day,spots:day.spots + 1}
+        console.log("new day",newday)
+        return newday
+        // return {...day,spots:day.spots++}
       }
+      return day
     })
+    console.log("after cancel",days)
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => setState({...state, appointments, days}))
+      .then(() => { setState((state) => {return {...state, appointments, days}})})
   }
 
   useEffect(() => {

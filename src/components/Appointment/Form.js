@@ -18,7 +18,6 @@ export default function Form(props) {
     reset()
     props.onCancel()
   }
-  console.log("check interviewer object", interviewer)
 
   function validate() {
     if (name === "") {

@@ -15,7 +15,6 @@ test("useVisualMode should initialize with default value", () => {
 test("useVisualMode should transition to another mode", () => {
   const { result } = renderHook(() => useVisualMode(FIRST));
   act(() => result.current.transition(SECOND));
-  console.log("2", result.current)
   expect(result.current.mode).toBe(SECOND);
 });
 

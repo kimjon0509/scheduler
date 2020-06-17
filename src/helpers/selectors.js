@@ -29,11 +29,9 @@ export const getInterviewersByDay = (state, day) => {
   
   if (filteredDays.length !== 0) {
     const interviewersList = filteredDays[0].interviewers;
-    console.log("interviewersList", typeof interviewersList)
     for (let interviewer of interviewersList)  {
       interviewersVal.push(state.interviewers[interviewer])
     };
   }
-  console.log("from function" , interviewersVal)
   return interviewersVal;
 }

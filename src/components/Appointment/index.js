@@ -22,21 +22,18 @@ const ERROR_SAVE = "ERROR_SAVE"
 const ERROR_DELETE = "ERROR_DELETE"
 
 export default function Appointment(props) {
-  
-  console.log("key check", props.id)
+
   
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-
-  console.log("props interview data", props.interview)
 
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
-    transition(SAVING);
+    transition(SAVING, true);
     props.bookInterview(props.id,interview)
       .then(() => {
         transition(SHOW)
